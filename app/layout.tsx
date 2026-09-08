@@ -1,3 +1,26 @@
 import './globals.css'
-export const metadata={title:'Imperial Arte Floral',description:'Pedidos florales'}
-export default function RootLayout({children}:{children:React.ReactNode}){return <html lang="es"><body><div className="container"><nav className="nav"><a className="brand" href="/">Imperial Arte Floral</a><div className="navlinks"><a href="/catalogo">Catálogo</a><a href="/pedido">Crear pedido</a><a href="/admin">Administración</a></div></nav>{children}<footer className="footer">Imperial Arte Floral · Plataforma desarrollada por NOVATECHZ</footer></div></body></html>}
+import Link from 'next/link'
+
+export const metadata={
+  title:'Imperial Arte Floral | Arreglos y coronas florales',
+  description:'Catálogo y pedidos personalizados de Imperial Arte Floral.'
+}
+
+export default function RootLayout({children}:{children:React.ReactNode}){
+  return <html lang="es"><body>
+    <header className="site-header">
+      <div className="container nav">
+        <Link className="brand" href="/"><span className="brand-mark">✦</span><span>Imperial Arte Floral</span></Link>
+        <nav className="navlinks" aria-label="Navegación principal">
+          <Link href="/">Inicio</Link>
+          <Link href="/catalogo">Catálogo</Link>
+          <Link href="/pedido">Crear pedido</Link>
+          <Link className="nav-admin" href="/admin">Administración</Link>
+        </nav>
+      </div>
+    </header>
+    <div className="container">{children}
+      <footer className="footer"><span>© Imperial Arte Floral · Elegancia para momentos importantes.</span><span>Plataforma desarrollada por NOVATECHZ</span></footer>
+    </div>
+  </body></html>
+}
