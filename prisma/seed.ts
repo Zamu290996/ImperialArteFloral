@@ -1,1 +1,55 @@
 
+import { PrismaClient, ProductCategory } from '@prisma/client'
+import bcrypt from 'bcryptjs'
+
+const prisma = new PrismaClient()
+
+async function main() {
+  const email = process.env.ADMIN_EMAIL || 'admin@imperial.local'
+  const password =
+    process.env.ADMIN_PASSWORD || 'CambiaEstaClave123!'
+
+  await prisma.user.upsert({
+    where: { email },
+    update: {},
+    create: {
+      email,
+      name: 'Administrador',
+      passwordHash: await bcrypt.hash(password, 12)
+    }
+  })
+
+  const count = await prisma.product.count()
+
+  if (count === 0) {
+    await prisma.product.createMany({
+      data: [
+        {
+          name: 'Corona Blanca Clásica',
+          description:
+            'Corona fúnebre tradicional circular, sin tripié.',
+          category: ProductCategory.FUNERAL_WREATH,
+          price: 1800
+        },
+        {
+          name: 'Arreglo Blanco Imperial',
+          description:
+            'Arreglo comercial de elegancia en blanco total.',
+          category: ProductCategory.COMMERCIAL,
+          price: 1450
+        },
+        {
+          name: 'Corona Luz Serena',
+          description:
+            'Corona fúnebre tradicional con composición blanca.',
+          category: ProductCategory.FUNERAL_WREATH,
+          price: 2200
+        }
+      ]
+    })
+  }
+}
+
+main()
+  .catch(console.error)
+  .finally(() => prisma.$disconnect())
