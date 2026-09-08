@@ -4,7 +4,7 @@ import {redirect} from 'next/navigation'
 import Link from 'next/link'
 export const dynamic='force-dynamic'
 
-function Side(){return <aside className="admin-sidebar"><div className="admin-title">Imperial Admin</div><div className="admin-sub">Centro de operación</div><nav className="admin-menu"><Link href="/admin">▦ Resumen</Link><Link href="/admin/productos">✦ Productos</Link><Link href="/admin/conmutador">☎ Conmutador</Link></nav></aside>}
+function Side(){return <aside className="admin-sidebar"><div className="admin-title">Imperial Admin</div><div className="admin-sub">Centro de operación</div><nav className="admin-menu"><Link href="/admin">▦ Resumen</Link><Link href="/admin/productos">✦ Productos</Link><Link href="/admin/conmutador">☎ Conmutador</Link><Link href="/inicio">← Volver al sitio</Link></nav></aside>}
 const statusLabel=(s:string)=>({NEW:'Nuevo',CONFIRMED:'Confirmado',IN_PROCESS:'En proceso',READY:'Listo',DELIVERED:'Entregado',CANCELLED:'Cancelado'}[s]||s)
 
 export default async function Admin(){
