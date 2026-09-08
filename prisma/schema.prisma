@@ -101,4 +101,8 @@ enum PaymentStatus {
   PAID
   FAILED
   REFUNDED
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 3535fb7b3bd78119fa48e3319996411b4896e673
