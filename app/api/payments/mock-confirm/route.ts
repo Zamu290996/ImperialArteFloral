@@ -1,0 +1,1 @@
+import {prisma} from '@/lib/prisma'; import {NextResponse} from 'next/server'; export async function POST(req:Request){const f=await req.formData(),id=String(f.get('orderId')||'');const o=await prisma.order.update({where:{id},data:{paymentStatus:'PAID',status:'CONFIRMED'}});return NextResponse.redirect(new URL(`/pedido-confirmado?folio=${o.folio}`,req.url),303)}

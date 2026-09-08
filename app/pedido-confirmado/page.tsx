@@ -1,0 +1,1 @@
+export default function C({searchParams}:{searchParams:{folio?:string}}){return <main className="section"><div className="card"><h1>Pedido registrado</h1><p>Folio: <b>{searchParams.folio}</b></p><a className="btn" href="/">Inicio</a></div></main>}
