@@ -1,11 +1,104 @@
-generator client { provider = "prisma-client-js" }
-datasource db { provider = "postgresql" url = env("DATABASE_URL") }
-model User { id String @id @default(cuid()) email String @unique passwordHash String name String role String @default("ADMIN") createdAt DateTime @default(now()) }
-model Product { id String @id @default(cuid()) name String description String? category ProductCategory price Decimal @db.Decimal(10,2) imageUrl String? active Boolean @default(true) createdAt DateTime @default(now()) updatedAt DateTime @updatedAt items OrderItem[] }
-model Order { id String @id @default(cuid()) folio String @unique customerName String phone String email String? deliveryNotes String? ribbonText String flowerBase FlowerBase sunflowers Boolean @default(false) status OrderStatus @default(NEW) paymentStatus PaymentStatus @default(PENDING) paymentReference String? total Decimal @db.Decimal(10,2) createdAt DateTime @default(now()) updatedAt DateTime @updatedAt items OrderItem[] }
-model OrderItem { id String @id @default(cuid()) orderId String productId String quantity Int @default(1) unitPrice Decimal @db.Decimal(10,2) order Order @relation(fields:[orderId],references:[id],onDelete:Cascade) product Product @relation(fields:[productId],references:[id]) }
-model CallLog { id String @id @default(cuid()) externalId String @unique caller String destination String status String duration Int? recordingUrl String? createdAt DateTime @default(now()) }
-enum ProductCategory { COMMERCIAL FUNERAL_WREATH }
-enum FlowerBase { LILIES GERBERAS }
-enum OrderStatus { NEW CONFIRMED IN_PROCESS READY DELIVERED CANCELLED }
-enum PaymentStatus { PENDING PAID FAILED REFUNDED }
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String
+  role         String   @default("ADMIN")
+  createdAt    DateTime @default(now())
+}
+
+model Product {
+  id          String          @id @default(cuid())
+  name        String
+  description String?
+  category    ProductCategory
+  price       Decimal         @db.Decimal(10, 2)
+  imageUrl    String?
+  active      Boolean         @default(true)
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+  items       OrderItem[]
+}
+
+model Order {
+  id               String        @id @default(cuid())
+  folio            String        @unique
+  customerName     String
+  phone            String
+  email            String?
+  deliveryNotes    String?
+  ribbonText       String
+  flowerBase       FlowerBase
+  sunflowers       Boolean       @default(false)
+  status           OrderStatus   @default(NEW)
+  paymentStatus    PaymentStatus @default(PENDING)
+  paymentReference String?
+  total            Decimal       @db.Decimal(10, 2)
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+  items            OrderItem[]
+}
+
+model OrderItem {
+  id        String  @id @default(cuid())
+  orderId   String
+  productId String
+  quantity  Int     @default(1)
+  unitPrice Decimal @db.Decimal(10, 2)
+
+  order   Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id])
+}
+
+model CallLog {
+  id           String   @id @default(cuid())
+  externalId   String   @unique
+  caller       String
+  destination  String
+  status       String
+  duration     Int?
+  recordingUrl String?
+  createdAt    DateTime @default(now())
+}
+
+model PBXSetting {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String
+  updatedAt DateTime @updatedAt
+}
+
+enum ProductCategory {
+  COMMERCIAL
+  FUNERAL_WREATH
+}
+
+enum FlowerBase {
+  LILIES
+  GERBERAS
+}
+
+enum OrderStatus {
+  NEW
+  CONFIRMED
+  IN_PROCESS
+  READY
+  DELIVERED
+  CANCELLED
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+}
