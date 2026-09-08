@@ -1,0 +1,1 @@
+export function pbxMode(){return process.env.PBX_PROVIDER||'mock'} export function getPublicNumber(){return process.env.PBX_PUBLIC_NUMBER||'Pendiente de asignar'}

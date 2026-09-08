@@ -1,0 +1,1 @@
+export async function createPayment(orderId:string,total:number){return {provider:process.env.PAYMENT_PROVIDER||'mock',status:'PENDING',reference:`MOCK-${orderId}`,checkoutUrl:`/pago-demo?order=${orderId}`}}
